@@ -195,7 +195,7 @@ kubectl exec -it <포드이름> -/bin/bash
   - 포드 내의 컨테이너 출력을 살펴 보는 것임
 - **$ kubectl -n kube-system logs etcd-master**
   - 로그 출력
-
+## 용어 정리
 #### DOCKER , CONTAINER 비교
 
 - 도커는 컨테이너 기술 중 하나
