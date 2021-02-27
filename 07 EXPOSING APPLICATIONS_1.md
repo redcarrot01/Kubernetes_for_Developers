@@ -227,7 +227,7 @@ spec:
 
     - 이것을 방지하기 위해  readiness probe 설정
 
-![image-20210226161353086](C:\Users\yujin\AppData\Roaming\Typora\typora-user-images\image-20210226161353086.png)
+![image](https://user-images.githubusercontent.com/38436013/109375944-3ae75000-7904-11eb-9428-1cdfeb1861ee.png)
 
 #### ipvs 모드
 
