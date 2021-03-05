@@ -61,10 +61,13 @@ spec:
 
 - **what?** ClusterIP를 None으로 설정하면 ClusterIP가 없는 서비스 생성 => 헤드리스
 - **when?** 로드밸런싱이 필요없거나 단일 서비스 IP가 필요 없는 경우
+- **how?**  .spec.clusterIP : None 지정
 
 ##### 서비스 YAML
 
 - 셀렉터 있는 서비스
+
+  - DNS 자동으로 구성되는 방법
 
   - 엔드포인트 레코드 생성
 
@@ -242,7 +245,7 @@ spec:
 #### Ingress
 
 - Ingress : 클러스터 외부 -> 내부로 접근하는 요청 처리 규칙 모음
-- 부에서 접근가능한 URL을 사용할 수 있게 하고, 트래픽 로드밸런싱도 해주고, SSL 인증서 처리도 해주고, 도메인 기반으로 가상 호스팅을 제공
+- 외부에서 접근가능한 URL을 사용할 수 있게 하고, 트래픽 로드밸런싱도 해주고, SSL 인증서 처리도 해주고, 도메인 기반으로 가상 호스팅을 제공
 - ingress가 동작하게 해주는 것 -> **Ingress Controller** 
 - 클라우드 서비스를 사용하지 않는 경우,  Ingress Controller와 직접 Ingress와 연동해 주어야 함
 - 이때 가장 많이 사용하는 ingress-nginx(https://github.com/kubernetes/ingress-nginx)
@@ -277,18 +280,18 @@ spec:
 ~~~
 
 - foo.bar.com으로 요청->  /foos1이면 서비스 s1으로 연결,   /bars2이면 서비스 s2쪽으로 연결
-- 또 라든 호스트명인 bar.foot.com도 서비스 s2로 연결
+- 또 다른 호스트명인 bar.foo.com도 서비스 s2로 연결
 - 결론은 ingress사용하면 외부에서 들어오는 요청 간단히 처리
 
 #### Ingress Controller : nginx
 
 - Ingress는 설정일 뿐 동작하게 하는 것이 Ingress Controller
 
-- Ingress Controller를 통해서 트래픽이 전달될때 중간에 서비스를 거치지 않고 직접 포드로 연결되는 구조
+- Ingress Controller를 통해서 트래픽이 전달될때 중간에 서비스를 거치지 않고 직접 파드로 연결되는 구조
 
 - 동작
 
-  별도읜 NodePort없이 IngressController에 접근가능하게 되고, 다시 Pod로 접근 가능하게 되기 때문에 빠른 속도 성능 가질 수 있음
+  별도의 NodePort없이 IngressController에 접근가능하게 되고, 다시 Pod로 접근 가능하게 되기 때문에 빠른 속도 성능 가질 수 있음
 
   ![image](https://user-images.githubusercontent.com/38436013/109375574-2ce40000-7901-11eb-80a3-e8fa4a9cfe4e.png)
 
@@ -300,8 +303,8 @@ spec:
 
 차이점 
 
- 	1.  서비스가 너무 많아질 경우, 독립적으로 사용하면 관리의 어려움과 리소스 낭비 -> 유연성 제공
- 	2.  낮은 번호의 포트를 애플리케이션에 노출 가능 -> iptables 는 관리 어려움
+   	1.  서비스가 너무 많아질 경우, 독립적으로 사용하면 관리의 어려움과 리소스 낭비 -> 유연성 제공
+   	2.  낮은 번호의 포트를 애플리케이션에 노출 가능 -> iptables 는 관리 어려움
 
 ## 6 서비스 메시(Service Mesh)
 
@@ -310,7 +313,7 @@ spec:
 
 #### Mesh Network
 
-![image-20210227134954383](C:\Users\yujin\AppData\Roaming\Typora\typora-user-images\image-20210227134954383.png)
+![image](https://user-images.githubusercontent.com/38436013/110087261-c6665280-7dd6-11eb-9d2b-2ca42c24bcc4.png)
 
 - 개별 proxy는 각 서비스와 함께 실행해서 sidecar 라고 부르는데
 - sidecar proxy들이 모여 mesh network 형성
@@ -338,6 +341,6 @@ spec:
 
 - 라운드로빈 : 시분할 시스템을 위해 설계된 선점형 스케줄링
 
-  순서대로 시간단위르 cpu를 할당하는 방식
+  순서대로 시간단위로 cpu를 할당하는 방식
 
   위에서는 pod들의 순서대로 요청을 처리해 주겠지? (종료되거나 비정상 pod들은 건너뛰고 ??)
